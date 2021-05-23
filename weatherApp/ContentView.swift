@@ -26,16 +26,14 @@ struct WeatherItemView: View {
         ZStack {
             RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/).stroke()
             HStack {
-                Text("☀️").font(.largeTitle)
+                Text(record.weatherIcon()).font(.largeTitle)
                 VStack {
                     Text(record.cityName)
-                    var parameter = record.parameters[record.parameterNr]
-                    Text("\(parameter.0): \(record.parameters[record.parameterNr].1, specifier: "%.1f")℃").font(.caption).onTapGesture {
+                    Text("\(record.currentParameter): \(record.currentParameterValue(), specifier: "%.1f")").font(.caption).onTapGesture {
                         weatherModelView.nextParam(record: record)
                     }
                 }
                 Text("🔄").font(.largeTitle).onTapGesture {
-                    print("here")
                     weatherModelView.refresh(record: record)
                 }
             }
