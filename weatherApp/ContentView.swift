@@ -1,4 +1,4 @@
-//
+ //
 //  ContentView.swift
 //  weatherApp
 //
@@ -23,10 +23,12 @@ struct WeatherItemView: View {
     var record: WeatherModel.WeatherRecord
     var weatherModelView: WeatherModelView
     let cornerRadius = CGFloat(25.0)
-    let height = 30
+    let height = CGFloat(80)
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: cornerRadius).stroke()
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .stroke()
+                .frame(height: height)
             HStack {
                 Text(record.weatherIcon()).font(.largeTitle)
                 VStack (alignment: .leading){ //Wyrównuje nazwę miasta i parametr do lewej strony
