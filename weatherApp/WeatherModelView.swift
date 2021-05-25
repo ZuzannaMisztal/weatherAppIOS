@@ -9,7 +9,9 @@ import Foundation
 
 class WeatherModelView: ObservableObject {
     
-    private(set) var model: WeatherModel = WeatherModel(cities: ["Kraków", "Tokio", "Rio", "Moskwa", "Denver", "Nairobi", "Lizbona"])
+    private(set) var model: WeatherModel = WeatherModel(cities: ["Kraków", "Tokio", "Rio"])
+    
+//    private(set) var model: WeatherModel = WeatherModel(cities: ["Kraków", "Tokio", "Rio", "Moskwa", "Denver", "Nairobi", "Lizbona"])
     
     var records: Array<WeatherModel.WeatherRecord> {
         model.records

@@ -22,12 +22,14 @@ struct ContentView: View {
 struct WeatherItemView: View {
     var record: WeatherModel.WeatherRecord
     var weatherModelView: WeatherModelView
+    let cornerRadius = CGFloat(25.0)
+    let height = 30
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/).stroke()
+            RoundedRectangle(cornerRadius: cornerRadius).stroke()
             HStack {
                 Text(record.weatherIcon()).font(.largeTitle)
-                VStack {
+                VStack (alignment: .leading){ //Wyrównuje nazwę miasta i parametr do lewej strony
                     Text(record.cityName)
                     Text("\(record.currentParameter): \(record.currentParameterValue(), specifier: "%.1f")").font(.caption).onTapGesture {
                         weatherModelView.nextParam(record: record)
