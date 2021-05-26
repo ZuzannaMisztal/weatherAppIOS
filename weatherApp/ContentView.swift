@@ -11,9 +11,11 @@ struct ContentView: View {
     @ObservedObject var weatherModelView: WeatherModelView
     
     var body: some View {
-        VStack {
-            ForEach(weatherModelView.records) { rec in
-                WeatherItemView(record: rec, weatherModelView: weatherModelView)
+        ScrollView(.vertical) { //dzięki temu można przewija listę miast
+            VStack {
+                ForEach(weatherModelView.records) { rec in
+                    WeatherItemView(record: rec, weatherModelView: weatherModelView)
+                }
             }
         }
     }
@@ -23,22 +25,26 @@ struct WeatherItemView: View {
     var record: WeatherModel.WeatherRecord
     var weatherModelView: WeatherModelView
     let cornerRadius = CGFloat(25.0)
-    let height = CGFloat(80)
+    let height = CGFloat(70)
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: cornerRadius)
                 .stroke()
-                .frame(height: height)
-            HStack {
-                Text(record.weatherIcon()).font(.largeTitle)
-                VStack (alignment: .leading){ //Wyrównuje nazwę miasta i parametr do lewej strony
-                    Text(record.cityName)
-                    Text("\(record.currentParameter): \(record.currentParameterValue(), specifier: "%.1f")").font(.caption).onTapGesture {
-                        weatherModelView.nextParam(record: record)
+                .frame(height: height) //stala wysokośc dla każdej komórki
+            GeometryReader { geometry in
+                HStack {
+                    Text(record.weatherIcon()).font(.system(size: 0.9 * geometry.size.height))
+                    VStack (alignment: .leading){ //Wyrównuje nazwę miasta i parametr do lewej strony
+                        Text(record.cityName)
+                        Text("\(record.currentParameter): \(record.currentParameterValue(), specifier: "%.1f")").font(.caption).onTapGesture {
+                            weatherModelView.nextParam(record: record)
+                        }
                     }
-                }
-                Text("🔄").font(.largeTitle).onTapGesture {
-                    weatherModelView.refresh(record: record)
+                    .frame(height: 0.9 * geometry.size.height, alignment: .center)
+                    Text("🔄").font(.largeTitle).onTapGesture {
+                        weatherModelView.refresh(record: record)
+                    }
+                    .frame(alignment: .trailing)
                 }
             }
         }
