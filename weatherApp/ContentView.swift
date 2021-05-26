@@ -26,25 +26,31 @@ struct WeatherItemView: View {
     var weatherModelView: WeatherModelView
     let cornerRadius = CGFloat(25.0)
     let height = CGFloat(70)
+    let scale = CGFloat(0.85)
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: cornerRadius)
                 .stroke()
                 .frame(height: height) //stala wysokośc dla każdej komórki
+                .padding(.leading, 2) //odstęp od lewej i prawej krawędzi
+                .padding(.trailing, 2)
             GeometryReader { geometry in
                 HStack {
-                    Text(record.weatherIcon()).font(.system(size: 0.9 * geometry.size.height))
+                    Text(record.weatherIcon())
+                        .font(.system(size: scale * geometry.size.height))
+                        .padding(.leading, 3)
+                    Spacer()
                     VStack (alignment: .leading){ //Wyrównuje nazwę miasta i parametr do lewej strony
                         Text(record.cityName)
                         Text("\(record.currentParameter): \(record.currentParameterValue(), specifier: "%.1f")").font(.caption).onTapGesture {
                             weatherModelView.nextParam(record: record)
                         }
                     }
-                    .frame(height: 0.9 * geometry.size.height, alignment: .center)
+                    Spacer()
                     Text("🔄").font(.largeTitle).onTapGesture {
                         weatherModelView.refresh(record: record)
                     }
-                    .frame(alignment: .trailing)
+                    Divider() //tu spelnia podobną rolę co padding .trailing na powyższym tekście
                 }
             }
         }
