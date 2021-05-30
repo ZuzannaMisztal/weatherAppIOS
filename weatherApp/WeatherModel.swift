@@ -59,7 +59,6 @@ struct WeatherModel {
     
     mutating func nextParam(record: WeatherRecord) {
         if let ind = records.firstIndex(of: record) {
-//            records[ind as Int].currer = (records[ind as Int].parameterNr + 1) % 4
             switch records[ind as Int].currentParameter{
             case "Wind Direction":
                 records[ind as Int].currentParameter = "Temperature"

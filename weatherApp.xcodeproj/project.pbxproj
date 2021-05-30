@@ -15,6 +15,8 @@
 		AC5825312659829E00FDE7F6 /* weatherAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5825302659829E00FDE7F6 /* weatherAppUITests.swift */; };
 		AC582542265988DF00FDE7F6 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC582541265988DF00FDE7F6 /* WeatherModel.swift */; };
 		AC5825472659894200FDE7F6 /* WeatherModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5825462659894200FDE7F6 /* WeatherModelView.swift */; };
+		AC8D41222664132500AC9B46 /* MetaWeatherFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D41212664132500AC9B46 /* MetaWeatherFetcher.swift */; };
+		AC8D41272664173700AC9B46 /* MetaWeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D41262664173700AC9B46 /* MetaWeatherResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		AC5825322659829E00FDE7F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC582541265988DF00FDE7F6 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		AC5825462659894200FDE7F6 /* WeatherModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModelView.swift; sourceTree = "<group>"; };
+		AC8D41212664132500AC9B46 /* MetaWeatherFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWeatherFetcher.swift; sourceTree = "<group>"; };
+		AC8D41262664173700AC9B46 /* MetaWeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWeatherResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				AC5825172659829D00FDE7F6 /* Assets.xcassets */,
 				AC58251C2659829D00FDE7F6 /* Info.plist */,
 				AC5825192659829D00FDE7F6 /* Preview Content */,
+				AC8D41212664132500AC9B46 /* MetaWeatherFetcher.swift */,
+				AC8D41262664173700AC9B46 /* MetaWeatherResponse.swift */,
 			);
 			path = weatherApp;
 			sourceTree = "<group>";
@@ -267,6 +273,8 @@
 			files = (
 				AC5825162659829600FDE7F6 /* ContentView.swift in Sources */,
 				AC5825472659894200FDE7F6 /* WeatherModelView.swift in Sources */,
+				AC8D41272664173700AC9B46 /* MetaWeatherResponse.swift in Sources */,
+				AC8D41222664132500AC9B46 /* MetaWeatherFetcher.swift in Sources */,
 				AC582542265988DF00FDE7F6 /* WeatherModel.swift in Sources */,
 				AC5825142659829600FDE7F6 /* weatherAppApp.swift in Sources */,
 			);
