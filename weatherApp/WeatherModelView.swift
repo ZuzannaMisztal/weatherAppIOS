@@ -18,9 +18,9 @@ class WeatherModelView: ObservableObject {
     
     @Published private(set) var model: WeatherModel
     
-    private let woeIds: Array = ["523920","1118370", "455825"]
+    private let woeIds: Array = ["523920","1118370", "455825", "2122265", "2391279", "1528488", "742676", "565346", "368148", "638242", "862592"]
     
-    @Published var records: [WeatherModel.WeatherRecord] = []
+    @Published var initRecords: [WeatherModel.WeatherRecord] = []
     
 //    @Published private(set) var model: WeatherModel = WeatherModel(cities: ["Tokio", "Rio", "Moskwa", "Denver", "Nairobi", "Lizbona", "Helsinki", "Bogota", "Berlin", "Oslo"])
     
@@ -32,25 +32,22 @@ class WeatherModelView: ObservableObject {
         for woeId in woeIds {
             print("ID = \(woeId)")
             Just(woeId)
-//                .map { value in
-//                    return fetchWeather(forId: value)
-//                }
                 .sink ( receiveValue: fetchWeather(forId:))
                 .store(in: &cancellables)
         }
-        model.records = records
+        model.records = initRecords
     }
     
-//    var records: Array<WeatherModel.WeatherRecord> {
-//        model.records
-//    }
+    var records: Array<WeatherModel.WeatherRecord> {
+        model.records
+    }
     
     func fetchWeather(forId woeId: String) {
         fetcher.forecast(forId: woeId)
             .sink(receiveCompletion: { completion in
                 print(completion)
             }, receiveValue: { value in
-                self.records.append(WeatherModel.WeatherRecord(response: value))
+                self.initRecords.append(WeatherModel.WeatherRecord(response: value))
             })
             .store(in: &cancellables)
     }
