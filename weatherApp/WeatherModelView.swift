@@ -14,40 +14,43 @@ class WeatherModelView: ObservableObject {
     
     private let fetcher: MetaWeatherFetcher
     
-    @Published private(set) var model: WeatherModel = WeatherModel(cities: ["Warszawa", "Tokio", "Rio"])
+//    @Published private(set) var model: WeatherModel = WeatherModel(cities: ["Warszawa", "Tokio", "Rio"])
+    
+    @Published private(set) var model: WeatherModel
     
     private let woeIds: Array = ["523920","1118370", "455825"]
+    
+    @Published var records: [WeatherModel.WeatherRecord] = []
     
 //    @Published private(set) var model: WeatherModel = WeatherModel(cities: ["Tokio", "Rio", "Moskwa", "Denver", "Nairobi", "Lizbona", "Helsinki", "Bogota", "Berlin", "Oslo"])
     
 //    @Published var woeId: String = "1118370"
-    @Published var message: String = "(user message)"
     
     init() {
         fetcher = MetaWeatherFetcher()
+        model = WeatherModel()
         for woeId in woeIds {
             print("ID = \(woeId)")
             Just(woeId)
-                .map { value -> MetaWeatherResponse in
-                    fetchWeather(forId: value)
-                }
-                .sink { value in
-                    print(value)
-                }
+//                .map { value in
+//                    return fetchWeather(forId: value)
+//                }
+                .sink ( receiveValue: fetchWeather(forId:))
                 .store(in: &cancellables)
         }
+        model.records = records
     }
     
-    var records: Array<WeatherModel.WeatherRecord> {
-        model.records
-    }
+//    var records: Array<WeatherModel.WeatherRecord> {
+//        model.records
+//    }
     
     func fetchWeather(forId woeId: String) {
         fetcher.forecast(forId: woeId)
             .sink(receiveCompletion: { completion in
                 print(completion)
             }, receiveValue: { value in
-                print(value)
+                self.records.append(WeatherModel.WeatherRecord(response: value))
             })
             .store(in: &cancellables)
     }
