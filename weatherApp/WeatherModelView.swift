@@ -20,11 +20,9 @@ class WeatherModelView: ObservableObject {
     
     private let woeIds: Array = ["523920","1118370", "455825", "2122265", "2391279", "1528488", "742676", "565346", "368148", "638242", "862592"]
     
-    @Published var initRecords: [WeatherModel.WeatherRecord] = []
     
 //    @Published private(set) var model: WeatherModel = WeatherModel(cities: ["Tokio", "Rio", "Moskwa", "Denver", "Nairobi", "Lizbona", "Helsinki", "Bogota", "Berlin", "Oslo"])
     
-//    @Published var woeId: String = "1118370"
     
     init() {
         fetcher = MetaWeatherFetcher()
@@ -35,7 +33,6 @@ class WeatherModelView: ObservableObject {
                 .sink ( receiveValue: fetchWeather(forId:))
                 .store(in: &cancellables)
         }
-        model.records = initRecords
     }
     
     var records: Array<WeatherModel.WeatherRecord> {
@@ -44,17 +41,28 @@ class WeatherModelView: ObservableObject {
     
     func fetchWeather(forId woeId: String) {
         fetcher.forecast(forId: woeId)
+            .receive(on: RunLoop.main)
             .sink(receiveCompletion: { completion in
                 print(completion)
             }, receiveValue: { value in
-                self.initRecords.append(WeatherModel.WeatherRecord(response: value))
+                self.model.records.append(WeatherModel.WeatherRecord(response: value))
             })
             .store(in: &cancellables)
     }
     
-    func refresh(record: WeatherModel.WeatherRecord) {
+    func refresh(woeId: String) {
         objectWillChange.send()
-        model.refresh(record: record)
+        fetcher.forecast(forId: woeId)
+            .receive(on: RunLoop.main)
+            .map { value in
+                WeatherModel.WeatherRecord(response: value)
+            }
+            .sink(receiveCompletion: { completion in
+                print("Refresh completion \(completion)")
+            }, receiveValue: { value in
+                self.model.refresh(woeId: woeId, newValue: value)
+            })
+            .store(in: &cancellables)
     }
     
     func nextParam(record: WeatherModel.WeatherRecord) {

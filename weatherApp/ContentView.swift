@@ -48,7 +48,7 @@ struct WeatherItemView: View {
                     }
                     Spacer()
                     Text("🔄").font(.largeTitle).onTapGesture {
-                        weatherModelView.refresh(record: record)
+                        weatherModelView.refresh(woeId: record.woeId)
                     }
                     Divider() //tu spelnia podobną rolę co padding .trailing na powyższym tekście
                 }

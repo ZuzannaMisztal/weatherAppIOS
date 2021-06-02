@@ -30,6 +30,7 @@ struct WeatherModel {
 //        var windSpeed: Float = Float.random(in: 0.0...100.0)
 //        var windDirection: Float = Float.random(in: 0.0..<360.0)
         var currentParameter: String = "Temperature"
+        var woeId: String
         var weatherState: String
         var temperature: Float
         var humidity: Float
@@ -38,6 +39,7 @@ struct WeatherModel {
         
         init(response: MetaWeatherResponse){
             cityName = response.title
+            woeId = String(response.woeid)
             weatherState = response.consolidatedWeather[0].weatherStateName
             temperature = Float(response.consolidatedWeather[0].theTemp)
             humidity = Float(response.consolidatedWeather[0].humidity)
@@ -65,9 +67,10 @@ struct WeatherModel {
         }
     }
     
-    mutating func refresh(record: WeatherRecord) {
-        if let ind = records.firstIndex(of: record) {
-            records[ind as Int].temperature = Float.random(in: 0.0...100.0)
+    mutating func refresh(woeId: String, newValue: WeatherRecord) {
+        if let ind = records.firstIndex(where: { $0.woeId == woeId }) {
+            records[ind] = newValue
+            print("\(records[ind].cityName) refreshed")
         }
     }
     
